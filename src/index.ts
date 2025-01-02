@@ -9,6 +9,7 @@ import {
   getUserMessage,
   verifyAndParseRequest,
 } from "@copilot-extensions/preview-sdk";
+import { getUserMessageWithContext } from "./utils";
 
 const app = new Hono();
 const {
@@ -98,7 +99,9 @@ app.post("/", async (c) => {
   return stream(c, async (stream) => {
     try {
       stream.write(createAckEvent());
-      const userPrompt = getUserMessage(payload);
+
+      // TODO: detect file selection in question and use it as context instead of the whole file
+      const userPrompt = getUserMessageWithContext({ payload, type: "file" });
 
       const ollamaResponse = await fetch(`${OLLAMA_API.baseUrl}/api/generate`, {
         method: "POST",
