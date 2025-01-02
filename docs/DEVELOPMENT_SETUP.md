@@ -44,17 +44,17 @@ Next, you need to configure permissions. You only need to provide the bare minim
 
 ![Permissions and events](./images/permissions_and_events.png)
 
-1. Expand the **Account permissions** section and set the Copilot Chat permission to *Read-only*. The default is *No access*.
+1. Expand the **Account permissions** section and set the Copilot Chat permission to _Read-only_ as well as the Copilot Editor Context to _Read-only_. The default is _No access_.
 
 ![expanded account permissions](./images/account_permissions.png)
 
-2. Click **Save changes**. Don't be alarmed by the *Are you sure you want to update permissions?* message.
+2. Click **Save changes**. Don't be alarmed by the _Are you sure you want to update permissions?_ message.
 
 ![warning message](./images/warning.png)
 
 ### Copilot Settings
 
-1. Set the **App Type** to *Agent*. It's set to *Disabled* by default.
+1. Set the **App Type** to _Agent_. It's set to _Disabled_ by default.
 2. Set the URL to the root of the public URL you exposed via tunneling/port forwarding.
 
 ![GitHub App's Copilot settings section](./images/github_apps.png)
@@ -107,8 +107,7 @@ For these environments, follow these steps:
 
 3. Select your extension and ask a question or perform an operation.
 
-4. The Copilot extension will return a response of "Welcome *your_github_username*! It looks like you asked the following question: *your_question*. This is a GitHub Copilot extension template, so it's up to you to decide what you want to implement to answer prompts."
-
+4. The Copilot extension will return a response of "Welcome _your_github_username_! It looks like you asked the following question: _your_question_. This is a GitHub Copilot extension template, so it's up to you to decide what you want to implement to answer prompts."
 
 ![Copilot chat responding](./images/vs_code.png)
 
