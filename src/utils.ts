@@ -40,7 +40,5 @@ export function getUserMessageWithContext({
     })
     .join("\n\n");
 
-  return `${firstMessage.content}\n\n${
-    contextMarkdown ? `${FILES_PREAMBLE}\n\n${contextMarkdown}` : ""
-  }`;
+  return `${firstMessage.content}\n\n${FILES_PREAMBLE}\n\n${contextMarkdown}`;
 }
