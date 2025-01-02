@@ -2,6 +2,13 @@ import { CopilotRequestPayload } from "@copilot-extensions/preview-sdk";
 
 type FileContext = "file" | "selection";
 
+declare module "@copilot-extensions/preview-sdk" {
+  interface CopilotReferenceData {
+    language: string;
+    content: string;
+  }
+}
+
 const FILES_PREAMBLE = `FILES ARE REFERENCED BELOW. YOU MUST PROVIDE MARKDOWN CODE SNIPPETS FOR EACH FILE WITH IMPROVEMENTS TO THEM. IF YOU ARE SUGGESTING IMPROVEMENTS TO THE FILES BELOW, YOU MUST RETURN MARKDOWN CODE BLOCK ALONG WITH AN EXPLANATION OF THE CHANGES IN YOUR RESPONSE. KEEP EXPLANATIONS BRIEF.`;
 
 /**
