@@ -9,19 +9,14 @@ import {
   verifyAndParseRequest,
 } from "@copilot-extensions/preview-sdk";
 import { getUserMessageWithContext } from "./utils";
+import { config } from "./config";
 
 const app = new Hono();
-const {
-  OLLAMA_API_BASE_URL = "http://localhost:11434",
-  OLLAMA_MODEL = "codellama",
-} = process.env;
 
-const OLLAMA_API = {
-  baseUrl: OLLAMA_API_BASE_URL,
-  model: OLLAMA_MODEL,
-};
-
-console.log("Using Ollama API with the following URL and model:", OLLAMA_API);
+console.log(
+  "Using Ollama API with the following URL and model:",
+  config.ollama
+);
 
 async function* streamOllamaResponse(response: Response) {
   const reader = response.body?.getReader();
@@ -102,17 +97,20 @@ app.post("/", async (c) => {
       // TODO: detect file selection in question and use it as context instead of the whole file
       const userPrompt = getUserMessageWithContext({ payload, type: "file" });
 
-      const ollamaResponse = await fetch(`${OLLAMA_API.baseUrl}/api/generate`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: OLLAMA_MODEL,
-          prompt: userPrompt,
-          stream: true,
-        }),
-      });
+      const ollamaResponse = await fetch(
+        `${config.ollama.baseUrl}/api/generate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: config.ollama.model,
+            prompt: userPrompt,
+            stream: true,
+          }),
+        }
+      );
 
       if (!ollamaResponse.ok) {
         stream.write(
@@ -148,10 +146,9 @@ app.post("/", async (c) => {
   });
 });
 
-const port = process.env.PORT || 3000;
-console.log(`Server is running on port ${port}`);
+console.log(`Server is running on port ${config.server.port}`);
 
 serve({
   fetch: app.fetch,
-  port: Number(port),
+  port: Number(config.server.port),
 });
