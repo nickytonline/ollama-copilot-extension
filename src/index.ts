@@ -6,7 +6,6 @@ import {
   createDoneEvent,
   createErrorsEvent,
   createTextEvent,
-  getUserMessage,
   verifyAndParseRequest,
 } from "@copilot-extensions/preview-sdk";
 import { getUserMessageWithContext } from "./utils";
