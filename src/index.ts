@@ -18,26 +18,32 @@ console.log(
   config.ollama
 );
 
-async function* streamOllamaResponse(response: Response) {
+async function* getOllamaResponse(response: Response) {
   const reader = response.body?.getReader();
-  if (!reader) return;
+  if (!reader) {
+    throw new Error("No response body available");
+  }
 
   while (true) {
     const { done, value } = await reader.read();
-    if (done) break;
+
+    if (done) {
+      break;
+    }
 
     const chunk = new TextDecoder().decode(value);
     const lines = chunk.split("\n").filter(Boolean);
 
-    for (const line of lines) {
-      try {
+    try {
+      for (const line of lines) {
         const parsed = JSON.parse(line);
+
         if (parsed.response) {
           yield parsed.response;
         }
-      } catch (e) {
-        console.error("Error parsing Ollama response:", e);
       }
+    } catch (e) {
+      throw new Error("Error parsing Ollama response:", { cause: e });
     }
   }
 }
@@ -125,7 +131,7 @@ app.post("/", async (c) => {
         );
       }
 
-      for await (const chunk of streamOllamaResponse(ollamaResponse)) {
+      for await (const chunk of getOllamaResponse(ollamaResponse)) {
         stream.write(createTextEvent(chunk));
       }
 
