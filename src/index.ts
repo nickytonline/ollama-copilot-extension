@@ -8,8 +8,8 @@ import {
   createTextEvent,
   verifyAndParseRequest,
 } from "@copilot-extensions/preview-sdk";
-import { getUserMessageWithContext } from "./utils";
-import { config } from "./config";
+import { getUserMessageWithContext } from "./utils.ts";
+import { config } from "./config.ts";
 
 const app = new Hono();
 

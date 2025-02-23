@@ -1,4 +1,4 @@
-import { CopilotRequestPayload } from "@copilot-extensions/preview-sdk";
+import type { CopilotRequestPayload } from "@copilot-extensions/preview-sdk";
 
 type FileContext = "file" | "selection";
 
