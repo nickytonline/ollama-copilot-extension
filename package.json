@@ -1,7 +1,8 @@
 {
   "name": "ollama-copilot-extension",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "node --watch --experimental-strip-types src/index.ts",
+    "start": "node --experimental-strip-types src/index.ts"
   },
   "dependencies": {
     "@copilot-extensions/preview-sdk": "^5.0.1",
@@ -9,8 +10,7 @@
     "hono": "^4.7.1"
   },
   "devDependencies": {
-    "@types/node": "^22.13.0",
-    "tsx": "^4.19.2"
+    "@types/node": "^22.10.5"
   },
   "version": "1.0.0",
   "description": "``` npm install npm run dev ```",
