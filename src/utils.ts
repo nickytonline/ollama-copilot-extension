@@ -9,7 +9,11 @@ declare module "@copilot-extensions/preview-sdk" {
   }
 }
 
-const FILES_PREAMBLE = `FILES ARE REFERENCED BELOW. YOU MUST PROVIDE MARKDOWN CODE SNIPPETS FOR EACH FILE WITH IMPROVEMENTS TO THEM ALL GROUPED TOGETHER. PREFIX MARKDOWN CODEBLOCKS WITH THEIR LANGUAGE. FOR EXAMPLE, \`\`\`typescript\nconsole.log("Hello, world!");\n\`\`\` FOR TYPESCRIPT. PROVIDE AN EXPLANATION OF THE CHANGES IN YOUR RESPONSE. KEEP EXPLANATIONS BRIEF.`;
+const FILES_PREAMBLE = {
+  file: "REFERENCED FILES ARE SHOWN BELOW. PROVIDE CODE IMPROVEMENTS AS MARKDOWN CODEBLOCKS WITH APPROPRIATE LANGUAGE TAGS (e.g. ```typescript).",
+  selection:
+    "SELECTED CODE SNIPPETS ARE SHOWN BELOW. PROVIDE CODE IMPROVEMENTS AS MARKDOWN CODEBLOCKS WITH APPROPRIATE LANGUAGE TAGS (e.g. ```typescript).",
+};
 
 /**
  * Extracts user message and relevant context from a Copilot payload
@@ -31,7 +35,7 @@ export function getUserMessageWithContext({
   );
 
   if (!relevantReferences || relevantReferences.length === 0) {
-    return firstMessage.content;
+    return firstMessage?.content ?? "";
   }
 
   const contextMarkdown = relevantReferences
@@ -40,5 +44,7 @@ export function getUserMessageWithContext({
     })
     .join("\n\n");
 
-  return `${firstMessage.content}\n\n${FILES_PREAMBLE}\n\n${contextMarkdown}`;
+  return `${firstMessage?.content ?? ""}\n\n${
+    FILES_PREAMBLE[type]
+  }\n\n${contextMarkdown}`;
 }
